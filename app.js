@@ -21,8 +21,8 @@ app.get( '/', function( req, res ){
     }
   }
 
-  var json = { status: true, ip: req.ip, remode_address: req.connection.remoteAddress };
-  //console.log( req.headers );
+  var json = { status: true, ip: req.ip, remode_address: req.socket.remoteAddress };
+  //console.log( req.socket );
   if( req.headers && req.headers['x-forwarded-for'] ){
     var tmp = req.headers['x-forwarded-for'].split( ',' );
     var x = [];
