@@ -11,6 +11,16 @@ if( 'TRUST_PROXY' in process.env && process.env.TRUST_PROXY ){
 app.get( '/', function( req, res ){
   res.contentType( 'application/json; charset=utf-8' );
 
+  //. Overwrite TRUST_PROXY setting by query parameter
+  if( req.query.trust_proxy ){
+    var tp = req.query.trust_proxy;
+    if( tp == '0' ){
+      app.set( 'trust proxy', false );
+    }else if( tp == '1' ){
+      app.set( 'trust proxy', true );
+    }
+  }
+
   var json = { status: true, ip: req.ip, remode_address: req.connection.remoteAddress };
   //console.log( req.headers );
   if( req.headers && req.headers['x-forwarded-for'] ){
