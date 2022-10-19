@@ -3,6 +3,8 @@ var express = require( 'express' ),
     app = express();
 
 if( 'TRUST_PROXY' in process.env && process.env.TRUST_PROXY ){
+  //. true:           IPアドレス=Proxy経由とみなされ、X-FORWARDED-FOR の左端の値
+  //. false(default): IPアドレス=直接接続とみなされ、remoteAddress の値
   app.set( 'trust proxy', true );
 }
 
