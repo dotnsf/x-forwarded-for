@@ -12,7 +12,7 @@ app.get( '/', function( req, res ){
   var json = { status: true, ip: req.ip, remode_address: req.connection.remoteAddress };
   //console.log( req.headers );
   if( req.headers && req.headers['x-forwarded-for'] ){
-    var tmp = req.headers['x-forwardef-for'].split( ',' );
+    var tmp = req.headers['x-forwarded-for'].split( ',' );
     var x = [];
     for( var i = 0; i < tmp.length; i ++ ){
       x.push( tmp[i].trim() );
