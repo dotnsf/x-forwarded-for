@@ -11,7 +11,7 @@ if( 'TRUST_PROXY' in process.env && process.env.TRUST_PROXY ){
 app.get( '/', function( req, res ){
   res.contentType( 'application/json; charset=utf-8' );
 
-  //. Overwrite TRUST_PROXY setting by query parameter
+  //. TRUST_PROXY 設定をクエリパラメータで上書き
   if( req.query.trust_proxy ){
     var tp = req.query.trust_proxy;
     if( tp == '0' ){
@@ -21,6 +21,7 @@ app.get( '/', function( req, res ){
     }
   }
 
+  //. 解析
   var json = { status: true, ip: req.ip, remode_address: req.socket.remoteAddress };
   //console.log( req.socket );
   if( req.headers && req.headers['x-forwarded-for'] ){
@@ -30,6 +31,13 @@ app.get( '/', function( req, res ){
       x.push( tmp[i].trim() );
     }
     json['x-forwarded-for'] = x;
+  }
+
+  //. 設定のリセット
+  if( 'TRUST_PROXY' in process.env && process.env.TRUST_PROXY ){
+    app.set( 'trust proxy', true );
+  }else{
+    app.set( 'trust proxy', false );
   }
 
   res.write( JSON.stringify( json, null, 2 ) );
